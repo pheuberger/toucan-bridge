@@ -11,6 +11,7 @@ describe("Bridge contract", function () {
 	let registry;
 	let tco2;
 	let tco2Factory;
+	let nctPool;
 	let admin;
 	let bridgeAdmin;
 	let broker;
@@ -24,13 +25,14 @@ describe("Bridge contract", function () {
 		registry = contracts.registry;
 		tco2Factory = contracts.tco2Factory;
 		tco2 = contracts.tco2;
+		nctPool = contracts.nctPool;
 	});
 
 	beforeEach(async function () {
 		[admin, bridgeAdmin, broker] = await ethers.getSigners();
 
 		// Deploy ToucanRegenBridge
-		bridge = await deployBridge(bridgeAdmin.address, registry.address);
+		bridge = await deployBridge(bridgeAdmin.address, registry.address, nctPool.address);
 		await tco2Factory.addToAllowlist(bridge.address);
 	});
 
