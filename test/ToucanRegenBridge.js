@@ -20,7 +20,10 @@ describe("Bridge contract", function () {
 		[admin, bridgeAdmin, broker] = await ethers.getSigners();
 
 		// Deploy Toucan infra
-		[registry, tco2Factory, tco2] = await prepareToucanEnv(admin, broker);
+		const contracts = await prepareToucanEnv(admin, broker);
+		registry = contracts.registry;
+		tco2Factory = contracts.tco2Factory;
+		tco2 = contracts.tco2;
 	});
 
 	beforeEach(async function () {
