@@ -10,6 +10,7 @@ describe("Bridge contract", function () {
 	let bridge;
 	let registry;
 	let tco2;
+	let nonEligibleTco2;
 	let tco2Factory;
 	let nctPool;
 	let admin;
@@ -25,6 +26,7 @@ describe("Bridge contract", function () {
 		registry = contracts.registry;
 		tco2Factory = contracts.tco2Factory;
 		tco2 = contracts.tco2;
+		nonEligibleTco2 = contracts.nonEligibleTco2;
 		nctPool = contracts.nctPool;
 	});
 
@@ -81,6 +83,10 @@ describe("Bridge contract", function () {
 			await expect(bridge.connect(broker).bridge(regenUser, tco2Factory.address, 10)).to.be.revertedWith(
 				"not a TCO2"
 			);
+		});
+
+		it("should fail with NCT non-eligible TCO2 contract", async function () {
+			await expect(bridge.connect(broker).bridge(regenUser, nonEligibleTco2.address, 10)).to.be.reverted;
 		});
 
 		it("should burn successfully", async function () {
